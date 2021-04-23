@@ -35,3 +35,13 @@
         return lmList
 
 <img src="https://google.github.io/mediapipe/images/mobile/hand_landmarks.png">
+
+
+## Reqirements:
+
+- depthai	2.2.1.0
+- mediapipe	0.8.3.1
+- numpy	1.20.2
+- opencv-python	4.5.1.48
+- pip	21.0.1
+- pkg-resources	0.0.0	
