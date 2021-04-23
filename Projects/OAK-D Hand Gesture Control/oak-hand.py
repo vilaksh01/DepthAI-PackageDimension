@@ -19,12 +19,15 @@ from subprocess import call
 
 pTime = 0
 cTime = 0
-detector = htm.HandDetector(detectConf=0.7)
+
 color = (0, 0, 255)
 minVol = 0
 maxVol = 100
 vol = 0
 volBar = 400
+
+# handDetector class object
+detector = htm.HandDetector(detectConf=0.7)
 # Defining a pipeline
 p = dai.Pipeline()
 
@@ -56,22 +59,25 @@ with dai.Device(p) as device:
 
         if len(lmList) != 0:
             # print(lmList[4], lmList[8])
-            x1, y1 = lmList[4][1], lmList[4][2]
-            x2, y2 = lmList[8][1], lmList[8][2]
-            cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
-
+            x1, y1 = lmList[4][1], lmList[4][2]     #track thumb-tip x and y coordinate
+            x2, y2 = lmList[8][1], lmList[8][2]     #track index finger tip x and y coordinate
+            cx, cy = (x1 + x2) // 2, (y1 + y2) // 2    #find centre of line joining (x1,y1) and (x2,y2)
+            
+            #draw markings here circle and line to show interested regions
             cv2.circle(img, (x1, y1), 5, color, cv2.FILLED)
             cv2.circle(img, (x2, y2), 5, color, cv2.FILLED)
             cv2.line(img, (x1, y1), (x2, y2), color, 2)
             cv2.circle(img, (cx, cy), 5, color, cv2.FILLED)
-
+            
+            #calculate legth of the line, given we have two coordinates, calculating hypotenuse considering hand geometry between thumb and index-finger
+            #assume index finger to be perpendicular and thum to be base, then line joining tip would be hypotenuse
             length = math.hypot(x2 - x1, y2 - y1)
             if length < 50:
                 cv2.circle(img, (cx, cy), 10, (225, 0, 220), cv2.FILLED)
-            # hand range 50 - 300
-            # vol range 0 - 100
-            vol = int(np.interp(length, [50, 300], [minVol, maxVol]))
-            volBar = int(np.interp(length, [100, 250], [400, 150]))
+            # hand range 50 - 300 while tracking
+            # vol range 0 - 100 of system
+            vol = int(np.interp(length, [50, 300], [minVol, maxVol])) #map values using numpy
+            volBar = int(np.interp(length, [100, 250], [400, 150]))   #map values using numpy
 
             if vol >= minVol and vol <= maxVol:
                 call(["amixer", "-D", "pulse", "sset", "Master", str(vol) + "%"])
