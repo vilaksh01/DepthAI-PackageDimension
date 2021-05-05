@@ -287,6 +287,12 @@ print(length)
 cv2.line(org, (int(tlblX), int(tlblY)), (int(trbrX), int(trbrY)), (0, 0, 255), 2)
 cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2)
 ```
+
+## Quick run this project
+- Clone this repository.
+- Install all the requirement
+- Run main.py
+
 ## Project Inspiration
 This project was greatly inspired by Intel® RealSense™ Dimensional Weight Software https://www.intelrealsense.com/dimensional-weight-software/
 Using OAK-D devices you can build your own such device for warehouse package management.
