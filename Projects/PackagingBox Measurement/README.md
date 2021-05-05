@@ -287,6 +287,10 @@ print(length)
 cv2.line(org, (int(tlblX), int(tlblY)), (int(trbrX), int(trbrY)), (0, 0, 255), 2)
 cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2)
 ```
+## How to make camera setup for this project
+
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/standOak.png'>
+
 
 ## Quick run this project
 - Clone this repository.
@@ -299,3 +303,11 @@ cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2
 This project was greatly inspired by Intel® RealSense™ Dimensional Weight Software https://www.intelrealsense.com/dimensional-weight-software/
 Using OAK-D devices you can build your own such device for warehouse package management.
 
+## Future Implementation
+
+1. Broken Package Detection
+   - AI-enabled add-on to identify if the given box is broken, unpacked
+   - AI-enabled optimized packing box size and method of packing
+2. Barcode Detection and Decoding
+   - Identify the location of the barcode and decode it
+   - Cloud connected for inventory update
