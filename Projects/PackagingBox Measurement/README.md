@@ -289,7 +289,7 @@ cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2
 ```
 ## How to make camera setup for this project
 
-<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/standOak.png'>
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/standOak.png' height='30%' width='30%>
 
 
 ## Quick run this project
