@@ -41,7 +41,8 @@ The project has mainly four parts:
 
 # 1. DepthAI Pipeline configuration for depth and RGB image data
 
-```# create depthai pipeline
+```Python
+# create depthai pipeline
 def createPipeline():
     print('Creating Pipeline')
 
