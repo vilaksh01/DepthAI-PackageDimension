@@ -217,3 +217,31 @@ def baseDepthEstimation(pipeline, topLeft, bottomRight, config):
                     break
 ```
 
+## 3. Package Contour Detection
+To detect contours we apply first filters and canny detections
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/Screenshot%20from%202021-05-05%2007-02-08.png'>
+
+```python
+# perform blurring, edge detection, dilation and erode to find contours
+            imgBlur = cv2.GaussianBlur(img, (7, 7), 0)
+            imgGray = cv2.cvtColor(imgBlur, cv2.COLOR_BGR2GRAY)
+            imgCanny = cv2.Canny(imgGray, 50, 100)
+            kernel = np.ones((5, 5))
+            edged = cv2.dilate(imgCanny, kernel, iterations=1)
+            edged = cv2.erode(edged, None, iterations=1)
+
+            # call find contours to get all contours in image
+            cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            cnts = imutils.grab_contours(cnts)
+            if len(cnts) > 0:
+                cnts = contours.sort_contours(cnts)[ 0 ]
+            # color for each edge in case of rectangular bounding box
+            colors = ((0, 0, 255), (240, 0, 159), (255, 0, 0), (255, 255, 0))
+
+            # loop over the contours individually
+            for (i, c) in enumerate(cnts):
+
+                # if the contour is not sufficiently large, ignore it
+                if cv2.contourArea(c) < 1000:
+                    continue
+```
