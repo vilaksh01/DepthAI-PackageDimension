@@ -112,7 +112,11 @@ def createPipeline():
 
     return pipeline, topLeft, bottomRight, config
 ```
+
 ## 2. Base Depth Estimation
+In the start of the application the depth of the base from the camera is calculated for further package height calculation
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/Calibrate.gif'>
+
 ```python
 # call base depth estimation to set base depth for height calculations
 def baseDepthEstimation(pipeline, topLeft, bottomRight, config):
