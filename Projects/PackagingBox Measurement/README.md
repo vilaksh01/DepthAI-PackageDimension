@@ -112,5 +112,104 @@ def createPipeline():
 
     return pipeline, topLeft, bottomRight, config
 ```
+## 2. Base Depth Estimation
+```python
+# call base depth estimation to set base depth for height calculations
+def baseDepthEstimation(pipeline, topLeft, bottomRight, config):
+    st.warning('Please make sure the bounding box area is clear of objects.')
+    col1, col2 = st.beta_columns(2)
+    with col1:
+        st.text('Preview window.')
+    with col2:
+        st.text('Click start to calibrate depth for avg. 25 frames')
+        start = st.button('Start Calibration')
 
+    # Pipeline is defined, now we can connect to the device
+    with dai.Device(pipeline) as device:
+        device.startPipeline()
+
+        # Output queue will be used to get the depth frames from the outputs defined above
+        depthQueue = device.getOutputQueue(name="depth", maxSize=4, blocking=False)
+        spatialCalcQueue = device.getOutputQueue(name="spatialData", maxSize=4, blocking=False)
+        spatialCalcConfigInQueue = device.getInputQueue("spatialCalcConfig")
+
+        color = (255, 255, 255)
+        noFrames = 0
+        frameST = col1.empty()
+        frameST2 = col2.empty()
+        baseDepth = 0.0
+        DepthValue = 0.0
+        count = False
+        fontType = cv2.FONT_HERSHEY_TRIPLEX
+
+        while True:
+            inDepth = depthQueue.get()  # Blocking call, will wait until a new data has arrived
+            inDepthAvg = spatialCalcQueue.get()  # Blocking call, will wait until a new data has arrived
+            preview = device.getOutputQueue('preview').get()
+
+            img = preview.getFrame()
+
+            depthFrame = inDepth.getFrame()
+            depthFrameColor = cv2.normalize(depthFrame, None, 255, 0, cv2.NORM_INF, cv2.CV_8UC1)
+            depthFrameColor = cv2.equalizeHist(depthFrameColor)
+            depthFrameColor = cv2.applyColorMap(depthFrameColor, cv2.COLORMAP_JET)
+
+            spatialData = inDepthAvg.getSpatialLocations()
+            for depthData in spatialData:
+                roi = depthData.config.roi
+                roi = roi.denormalize(width=depthFrameColor.shape[ 1 ], height=depthFrameColor.shape[ 0 ])
+                xmin = int(roi.topLeft().x)
+                ymin = int(roi.topLeft().y)
+                xmax = int(roi.bottomRight().x)
+                ymax = int(roi.bottomRight().y)
+
+                # preview window info
+                cv2.rectangle(img, (xmin, ymin), (xmax, ymax), color, cv2.FONT_HERSHEY_SCRIPT_SIMPLEX)
+                cv2.putText(img, f"X: {int(depthData.spatialCoordinates.x)} mm", (xmin + 10, ymin + 20),
+                            fontType, 0.5, color)
+                cv2.putText(img, f"Y: {int(depthData.spatialCoordinates.y)} mm", (xmin + 10, ymin + 35),
+                            fontType, 0.5, color)
+                cv2.putText(img, f"Z: {int(depthData.spatialCoordinates.z)} mm", (xmin + 10, ymin + 50),
+                            fontType, 0.5, color)
+
+                # depth window info
+                cv2.rectangle(depthFrameColor, (xmin, ymin), (xmax, ymax), color, cv2.FONT_HERSHEY_SCRIPT_SIMPLEX)
+                cv2.putText(depthFrameColor, f"X: {int(depthData.spatialCoordinates.x)} mm", (xmin + 10, ymin + 20),
+                            fontType, 0.5, color)
+                cv2.putText(depthFrameColor, f"Y: {int(depthData.spatialCoordinates.y)} mm", (xmin + 10, ymin + 35),
+                            fontType, 0.5, color)
+                cv2.putText(depthFrameColor, f"Z: {int(depthData.spatialCoordinates.z)} mm", (xmin + 10, ymin + 50),
+                            fontType, 0.5, color)
+
+                if start:
+                    start = False
+                    count = True
+                    noFrames = 1
+
+                if count:
+                    DepthValue = (depthData.spatialCoordinates.z) / 10
+                    baseDepth += DepthValue
+                    print(baseDepth)
+                    DepthValue = 0.0
+
+                if noFrames == 25 and count == True:
+                    # Base depth value calculation, dividing by no. of frames for the average
+                    count = False
+                    print('Frames count {:d}'.format(noFrames))
+                    baseDepth = baseDepth / 25
+                    print('base depth {:>2f}'.format(baseDepth))
+                    st.text("Base Depth = {:>2f}".format(baseDepth))
+                    cv2.destroyAllWindows()
+                    return baseDepth
+
+                with col1:
+                    frameST.image(img, channels='BGR')
+                with col2:
+                    frameST2.image(depthFrameColor)
+
+                noFrames += 1
+
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+```
 
