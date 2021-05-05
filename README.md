@@ -10,5 +10,7 @@ DepthAI + OAK-D Camera based gesture control for controlling volume... for lazy 
 ### Projects > PackagingBox Measurement
 DepthAI + OAK-D Camera Parcel dimension measurement with custom dashboard with AI-enabled add-ons such as open, leaking, and broken box detection and packaging optimization to improve workforce efficiency and safety (In progress)
 
-### More coming soon............
+<img src="https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/calibBig.gif">
+
+See project deails here: https://github.com/vilaksh01/DepthAI-LazyProjects/tree/main/Projects/PackagingBox%20Measurement
 
