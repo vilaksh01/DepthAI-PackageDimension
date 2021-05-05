@@ -1,6 +1,7 @@
 # PackagingBox Measurement
 
 ## Dimensioning and Weighing Solutions using Depth AI
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/MeasureDark.gif' height="280" width="350"> | <img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/Calibrate.gif' height="280" width="350"> | <img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/Measure.gif' height="280" width="350">
 
 In the world of warehousing, `space = money` and `high labour cost = lesser profits.` Warehouse problems can affect the speed, efficiency, and productivity of either one particular warehouse operation or the entire chain of processes that are linked with it. Packaging operations have always been a real time-thief in warehouses and often almost completely manual. Often it is a real bottleneck in the warehouse flow. A half-hour before the trucks leave the warehouse, there is usually chaos in the packaging area with staff running into each other, looking for the right boxes and packing material to finish in time. This also affects the quality with the mixing of the goods from different orders as a result. Choosing the right package dimension size hep you to prevent costs of unncessary filling materials. 
 <pre>
