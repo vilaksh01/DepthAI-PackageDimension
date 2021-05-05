@@ -114,6 +114,7 @@ def createPipeline():
 ```
 
 ## 2. Base Depth Estimation
+
 In the start of the application the depth of the base from the camera is calculated for further package height calculation
 <img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/calibBig.gif'>
 
@@ -218,6 +219,7 @@ def baseDepthEstimation(pipeline, topLeft, bottomRight, config):
 ```
 
 ## 3. Package Contour Detection
+
 To detect contours we apply first filters and canny detections
 <img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/Screenshot%20from%202021-05-05%2007-02-08.png'>
 
@@ -245,3 +247,44 @@ To detect contours we apply first filters and canny detections
                 if cv2.contourArea(c) < 1000:
                     continue
 ```
+
+## 4. Package dimension and Volume Estimation
+
+Below you can see we provided the previous base depth value to compute for height, however we got height in negative because, the device should be mounted and steady, I did not had tripod stand for camera currently so testing it in my hand(so error was there due to mis alignment and movement of camera, otherwsie length and breadth are accurate, just 0.5cm tradeoff.
+
+<img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/test1.gif'>
+
+```python
+# order the points in the contour such that they appear
+# in top-left, top-right, bottom-right, and bottom-left
+# order, then draw the outline of the rotated bounding
+rect = perspective.order_points(box)
+# compute the center of the bounding box
+cX = int(np.average(box[ :, 0 ]))
+cY = int(np.average(box[ :, 1 ]))
+
+print(rect.astype("int"))
+print("")
+
+# extract all the edges as tuple
+(tl, tr, br, bl) = rect
+
+# compute width
+(tlblX, tlblY) = midpoint(tl, bl)
+(trbrX, trbrY) = midpoint(tr, br)
+# multiply by a constant we used while converting from pixel to actual breadth
+breadth = (dist.euclidean((tlblX, tlblY), (trbrX, trbrY))) * 0.046
+print(breadth)
+
+# compute length
+(tltrX, tltrY) = midpoint(tl, tr)
+(blbrX, blbrY) = midpoint(bl, br)
+# multiply by a constant we used while converting from pixel to actual length
+length = (dist.euclidean((tltrX, tltrY), (blbrX, blbrY))) * 0.042
+print(length)
+
+cv2.line(org, (int(tlblX), int(tlblY)), (int(trbrX), int(trbrY)), (0, 0, 255), 2)
+cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2)
+```
+
+
