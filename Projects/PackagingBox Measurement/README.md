@@ -293,6 +293,8 @@ cv2.line(org, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 0), 2
 - Install all the requirement
 - Run main.py
 
+<b> The application does not evaluate the scene for a box. So the scene must have only the box i.e no other edges. </b>
+
 ## Project Inspiration
 This project was greatly inspired by Intel® RealSense™ Dimensional Weight Software https://www.intelrealsense.com/dimensional-weight-software/
 Using OAK-D devices you can build your own such device for warehouse package management.
