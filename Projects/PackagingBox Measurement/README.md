@@ -251,7 +251,7 @@ To detect contours we apply first filters and canny detections
 
 ## 4. Package dimension and Volume Estimation
 
-Below you can see we provided the previous base depth value to compute for height, however we got height in negative because, the device should be mounted and steady, I did not had tripod stand for camera currently so testing it holding with my hand(so error was there due to mis alignment and movement of camera, otherwsie length and breadth are accurate, just 0.5cm tradeoff.
+Below you can see we provided the previous base depth value to compute for height, however we got height in negative because, the device should be mounted and steady, I did not had tripod stand for camera currently so testing it holding with my hand(so error was there due to mis alignment and movement of camera, otherwsie length and breadth are accurate, just ~2 cm tradeoff. The box actual dimension is 12cm x 15cm x 3.5cm 
 
 <img src='https://github.com/vilaksh01/DepthAI-LazyProjects/blob/main/Projects/PackagingBox%20Measurement/Images/test1.gif'>
 
