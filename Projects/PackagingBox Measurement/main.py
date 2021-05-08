@@ -357,15 +357,15 @@ st.sidebar.title("OAK-D Warehouse Management")
 option = st.sidebar.selectbox('Select', [ 'None', 'Base Depth Load', 'Measure Dimensions' ])
 
 if option == 'None':
-    st.sidebar.image('/home/sumit/PycharmProjects/Dimension_Measurement/Images/Measure.gif')
+    st.sidebar.image('Measure.gif')
 
 if option == 'Base Depth Load':
-    st.sidebar.image('/home/sumit/PycharmProjects/Dimension_Measurement/Images/Calibrate.gif')
+    st.sidebar.image('Calibrate.gif')
     baseDepth = baseDepthEstimation(pipeline, topLeft, bottomRight, config)
     print(baseDepth)
 
 if option == 'Measure Dimensions':
-    st.sidebar.image('/home/sumit/PycharmProjects/Dimension_Measurement/Images/MeasureDark.gif')
+    st.sidebar.image('MeasureDark.gif')
     # Enter depth value calculated in Base Depth Load option page
     baseDepth = st.sidebar.number_input('Base Depth Value:')
     main(baseDepth)
