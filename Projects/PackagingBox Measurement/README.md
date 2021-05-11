@@ -31,6 +31,7 @@ From small boxes to large pallets, our solution enables logistics companies to b
 - DepthAI SDK for OAK-D vision camera inferencing and Spatial Data.
 - Streamlit for web based dashboard for one button click dimension measuremnt and all metrics calculations.
 - OpenCV for all image processing and feature extaction.
+- Pycharm IDE Version: 2021.1.1
 
 ## DepthAI brings realtime Spatial AI to your product
 DepthAI is a platform built around the Myriad X to combine depth perception, object detection (neural inference), and object tracking that gives you this power in a simple, easy-to-use Python API and a plug/play System on Module (SoM) with Open-Source hardware.
